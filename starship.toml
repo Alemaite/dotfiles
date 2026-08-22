@@ -1,0 +1,13 @@
+add_newline = true
+
+[java]
+symbol = "java "
+
+[directory]
+read_only = " ro"
+
+[git_branch]
+symbol = " "
+
+[gradle]
+symbol = "gradle "
