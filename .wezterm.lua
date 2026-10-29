@@ -6,7 +6,7 @@ config.font = wezterm.font("JetBrainsMono Nerd Font")
 config.window_background_opacity = 1
 config.font_size = 11
 config.color_scheme = "Catppuccin Mocha"
-config.hide_tab_bar_if_only_one_tab = true
+config.hide_tab_bar_if_only_one_tab = false
 config.window_decorations = "RESIZE"
 
 config.tab_max_width = 24
@@ -37,6 +37,20 @@ wezterm.on("format-tab-title", function(tab)
 	name = name:match("[^/\\]+$") or name
 	name = name:gsub("%.exe$", "")
 	return " " .. name .. " "
+end)
+
+wezterm.on("update-status", function(window)
+	local zoomed = false
+	for _, p in ipairs(window:active_tab():panes_with_info()) do
+		if p.is_active and p.is_zoomed then
+			zoomed = true
+		end
+	end
+	window:set_right_status(zoomed and wezterm.format({
+		{ Background = { AnsiColor = "Yellow" } },
+		{ Foreground = { AnsiColor = "Black" } },
+		{ Text = " ZOOM " },
+	}) or "")
 end)
 
 config.keys = {
